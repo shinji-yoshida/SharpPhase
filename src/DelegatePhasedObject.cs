@@ -21,4 +21,27 @@
 			currentPhase.EnterPhase(delegator);
 		}
 	}
+
+	public class DelegatePhasedObject<TDelegator, TPhase> : IPhasedObject<TDelegator, TPhase> where TDelegator : IPhasedObject where TPhase : Phase<TDelegator> {
+		TDelegator delegator;
+		TPhase currentPhase;
+
+		public DelegatePhasedObject(TDelegator delegator, TPhase initialPhase) {
+			this.delegator = delegator;
+			this.currentPhase = initialPhase;
+			initialPhase.EnterPhase(delegator);
+		}
+
+		public void ChangePhase (TPhase newPhase) {
+			currentPhase.LeavePhase(delegator);
+			currentPhase = newPhase;
+			currentPhase.EnterPhase(delegator);
+		}
+
+		public TPhase CurrentPhase {
+			get {
+				return currentPhase;
+			}
+		}
+	}
 }

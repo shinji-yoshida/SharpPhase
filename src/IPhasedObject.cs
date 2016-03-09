@@ -8,4 +8,10 @@
 
 		void ChangePhase(Phase<Self> newPhase);
 	}
+
+	public interface IPhasedObject<Self, TPhase> : IPhasedObject where Self : IPhasedObject where TPhase : Phase<Self> {
+		TPhase CurrentPhase { get; }
+
+		void ChangePhase(TPhase newPhase);
+	}
 }
