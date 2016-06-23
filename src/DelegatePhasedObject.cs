@@ -20,7 +20,7 @@
 		}
 
 		public void TerminatePhase () {
-			currentPhase.LeavePhase (delegator);
+			currentPhase.TerminatePhase (delegator);
 			currentPhase = null;
 		}
 
