@@ -23,21 +23,33 @@
 
 		protected void InitPhase(TPhase initialPhase) {
 			this.currentPhase = initialPhase;
-			initialPhase.EnterPhase (Self);
+			MakeEnterPhase (initialPhase);
 		}
 
 		public void ChangePhase (TPhase newPhase) {
 			if (currentPhase == null)
 				throw new System.Exception ("already terminated");
 
-			currentPhase.LeavePhase(Self);
+			MakeLeavePhase (currentPhase);
 			currentPhase = newPhase;
-			currentPhase.EnterPhase(Self);
+			MakeEnterPhase (currentPhase);
 		}
 
 		public void TerminatePhase () {
-			currentPhase.TerminatePhase (Self);
+			MakeTerminatePhase (currentPhase);
 			currentPhase = null;
+		}
+
+		protected virtual void MakeEnterPhase(TPhase phase) {
+			phase.EnterPhase(Self);
+		}
+
+		protected virtual void MakeLeavePhase(TPhase phase) {
+			phase.LeavePhase(Self);
+		}
+
+		protected virtual void MakeTerminatePhase(TPhase phase) {
+			phase.TerminatePhase(Self);
 		}
 
 		public TPhase CurrentPhase {
